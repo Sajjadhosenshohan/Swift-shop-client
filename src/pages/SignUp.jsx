@@ -4,6 +4,7 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import imageToBase64 from "../helpers/ImageToBase64";
+// import SummaryApi from "../common/summaryApi";
 const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false)
@@ -30,7 +31,7 @@ const SignUp = () => {
     const file = e.target.files[0]
 
     const data = await imageToBase64(file)
-    console.log(data)
+    // console.log(data)
     setData((prev) => {
       return {
         ...prev,
@@ -40,11 +41,26 @@ const SignUp = () => {
   }
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if(data.password !== data.confirmPassword){
+      throw new Error("Confirm password is not same")
+    }
+    const signUpData = await fetch("http://localhost:8000/api/signup", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+
+    const signUpResponse = await signUpData.json()
+
+    console.log(signUpResponse.userSignUp)
   }
 
-  console.log(`data getting ${data.profilePicture}`)
+  // console.log(`data getting ${data.profilePicture}`)
   return (
     <section id="login">
       <div className="bg-white container max-w-lg my-10 mx-auto">
