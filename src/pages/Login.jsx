@@ -19,8 +19,20 @@ const Login = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        const signInResponse = await fetch("http://localhost:8000/api/signIn", {
+            credentials: 'include',
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+
+        const signInData = await signInResponse.json()
+        console.log(signInData)
+
     }
 
     console.log(`data getting ${data.email}`)
