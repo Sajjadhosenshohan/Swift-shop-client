@@ -4,6 +4,7 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import imageToBase64 from "../helpers/ImageToBase64";
+import toast from "react-hot-toast";
 // import SummaryApi from "../common/summaryApi";
 const SignUp = () => {
 
@@ -39,12 +40,12 @@ const SignUp = () => {
       }
     })
   }
-
+  console.log(data)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if(data.password !== data.confirmPassword){
+    if (data.password !== data.confirmPassword) {
       throw new Error("Confirm password is not same")
     }
     const signUpData = await fetch("http://localhost:8000/api/signup", {
@@ -57,7 +58,13 @@ const SignUp = () => {
 
     const signUpResponse = await signUpData.json()
 
-    console.log(signUpResponse.userSignUp)
+    // console.log(signUpResponse.userSignUp)
+    if (signUpResponse.success) {
+      toast.success(signUpResponse.message)
+    }
+    if (signUpResponse.error) {
+      toast.error(signUpResponse.message)
+    }
   }
 
   // console.log(`data getting ${data.profilePicture}`)
@@ -69,7 +76,7 @@ const SignUp = () => {
           {/* logo */}
           <div className="w-20 h-20 mx-auto my-5 rounded-full relative overflow-hidden cursor-pointer">
             <div>
-              <img src={ data.profilePicture || loginLogo} alt="" className="w-full h-full" />
+              <img src={data.profilePicture || loginLogo} alt="" className="w-full h-full" />
             </div>
 
             <form>
