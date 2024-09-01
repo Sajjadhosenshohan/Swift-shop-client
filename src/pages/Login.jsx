@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import loginLogo from "../assest/signin.gif"
 import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { ContextProvider } from "../Context/ContextProvider";
 const Login = () => {
+    const navigate = useNavigate()
+    const { userDetails } = useContext(ContextProvider)
 
     const [showPassword, setShowPassword] = useState(false)
     const [data, setData] = useState({ email: "", password: "" })
@@ -30,8 +34,18 @@ const Login = () => {
             body: JSON.stringify(data)
         })
 
-        const signInData = await signInResponse.json()
-        console.log(signInData)
+        const dataApi = await signInResponse.json()
+
+        if (dataApi.success) {
+            toast.success(dataApi.message)
+            navigate('/')
+            userDetails()
+
+        }
+
+        if (dataApi.error) {
+            toast.error(dataApi.message)
+        }
 
     }
 

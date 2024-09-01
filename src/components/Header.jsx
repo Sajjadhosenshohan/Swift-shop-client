@@ -3,7 +3,39 @@ import Logo from "./Logo"
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { GrSearch } from "react-icons/gr";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { setUserDetails } from "../store/userSlice";
+import { useCallback, useState } from "react";
+// import { setUserDetails } from "../store/userSlice";
 const Header = () => {
+  const dispatch = useDispatch()
+  const [menu, setShowMenu] = useState(false)
+
+  const user = useSelector(state => state?.usersSlice.user)
+  console.log(user)
+
+  // useCallback to memoize the handleLogout function
+  const handleLogout = useCallback(async () => {
+    const response = await fetch("http://localhost:8000/api/logout", {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await response.json();
+
+    if (data.success) {
+      toast.success(data.message);
+      dispatch(setUserDetails(null));
+    } else if (data.error) {
+      toast.error(data.message);
+    }
+  }, [dispatch]);
+
+  // useCallback for toggling menu
+  const toggleMenu = useCallback(() => {
+    setShowMenu((prev) => !prev);
+  }, []);
+
   return (
     <header className="h-16 shadow-md bg-white">
       <div className="h-full  container mx-auto  flex justify-between items-center px-4">
@@ -23,33 +55,48 @@ const Header = () => {
 
         <div className='flex items-center gap-7'>
 
-          <div className='relative flex justify-center'>
 
 
-            <div className='text-3xl cursor-pointer relative flex justify-center'>
-              <FaRegCircleUser />
+          <div onClick={toggleMenu} className='relative group  flex justify-center items-center'>
+
+            <div className='text-3xl cursor-pointer relative flex justify-center w-8 h-8'>
+              {
+                user?.profilePicture ? (
+                  <img src={user?.profilePicture} className='h-full w-full rounded-full' alt={user?.name} />
+                ) : (
+                  <FaRegCircleUser />
+                )
+              }
             </div>
 
-
-
-
-            {/* {
-              menuDisplay && (
-                <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded' >
+            {
+              menu && (
+                <div className="absolute  bg-white p-2 top-11 rounded shadow-md">
                   <nav>
-                    {
-                      user?.role === ROLE.ADMIN && (
-                        <Link to={"/admin-panel/all-products"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={() => setMenuDisplay(preve => !preve)}>Admin Panel</Link>
-                      )
-                    }
-
+                    <Link to="/" className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'>
+                      Admin panel
+                    </Link>
                   </nav>
                 </div>
               )
-            } */}
+            }
+
+            {/* {
+                menuDisplay && (
+                  <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded' >
+                    <nav>
+                      {
+                        user?.role === ROLE.ADMIN && (
+                          <Link to={"/admin-panel/all-products"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={() => setMenuDisplay(preve => !preve)}>Admin Panel</Link>
+                        )
+                      }
+
+                    </nav>
+                  </div>
+                )
+              } */}
 
           </div>
-
 
           <Link to={"/cart"} className='text-2xl relative'>
             <span><FaShoppingCart /></span>
@@ -59,17 +106,21 @@ const Header = () => {
             </div>
           </Link>
 
-            
+
 
           <div>
+            {
+              user ? <>
+                <button onClick={handleLogout} className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>Logout</button>
+              </> : <>
+                <Link to={"/login"}>
+                  <button className='px-3 py-1 text-center rounded-full text-white bg-red-600 hover:bg-red-700 ease-in-out duration-200'>
+                    Login
+                  </button>
+                </Link>
+              </>
+            }
 
-            {/* <button className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>Logout</button> */}
-
-            <Link to={"/login"}>
-              <button className='px-3 py-1 text-center rounded-full text-white bg-red-600 hover:bg-red-700 ease-in-out duration-200'>
-                Login
-              </button>
-            </Link>
 
           </div>
 
