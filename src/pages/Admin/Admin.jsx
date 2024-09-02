@@ -6,7 +6,7 @@ import { FaUserPen } from "react-icons/fa6";
 import { TiShoppingCart } from "react-icons/ti";
 const Admin = () => {
     const user = useSelector(state => state?.usersSlice.user)
-    console.log(user)
+    // console.log(user)
     return (
         <div className="flex min-h-[calc(100vh-120px)]">
 
