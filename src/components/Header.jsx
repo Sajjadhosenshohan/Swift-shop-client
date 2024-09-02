@@ -13,7 +13,7 @@ const Header = () => {
   const [menu, setShowMenu] = useState(false)
 
   const user = useSelector(state => state?.usersSlice.user)
-  console.log(user)
+  // console.log(user)
 
   // useCallback to memoize the handleLogout function
   const handleLogout = useCallback(async () => {
@@ -73,7 +73,7 @@ const Header = () => {
               menu && (
                 <div className="absolute  bg-white p-2 top-11 rounded shadow-md">
                   <nav>
-                    <Link to="/" className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'>
+                    <Link to="/admin-panel" className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'>
                       Admin panel
                     </Link>
                   </nav>
