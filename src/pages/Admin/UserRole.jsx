@@ -23,14 +23,14 @@ const UserRole = ({ onClose, updateUserDetails, callFunc }) => {
             })
         })
         const updatedData = await fetchData.json()
-        console.log(updatedData)
+        // console.log(updatedData)
         if (updatedData.success) {
             toast.success(updatedData.message)
             onClose()
             callFunc()
         }
 
-        console.log("role updated", updatedData)
+        // console.log("role updated", updatedData)
 
     }
 
@@ -40,7 +40,7 @@ const UserRole = ({ onClose, updateUserDetails, callFunc }) => {
             <div className="bg-white w-full  max-w-sm p-5 shadow-md  mx-auto text-slate-700">
 
                 <div onClick={onClose} className="flex justify-end">
-                    <IoMdClose className="w-8 h-8 border border-slate-400 rounded-full bg-[#F1F5F9]" />
+                    <IoMdClose className="w-8 h-8  hover:bg-red-100 hover:text-red-500 rounded-full bg-[#F1F5F9]" />
                 </div>
 
                 <h1 className="pb-4 text-2xl font-medium text-slate-900">Update User Role</h1>

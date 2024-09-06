@@ -89,7 +89,7 @@ const Login = () => {
                             </div>
 
                             <div className="">
-                                <button className="primaryBgColor text-white px-6 py-2 rounded-full mt-6 w-1/2 mx-auto block  hover:scale-105 transition-all hover:bg-red-700">login</button>
+                                <button className="btn btn-form">login</button>
                             </div>
 
                             <div>

@@ -12,3 +12,13 @@ body{
 .primaryTextColor{
     color: rgb(224,36,36);
 }
+
+@layer components{
+    .btn{
+        @apply bg-[rgb(224,36,36)] text-white px-6 py-2 rounded-full mt-6  block  hover:scale-105 transition-all hover:bg-red-700
+    }
+
+    .btn-form{
+        @apply w-1/2 mx-auto
+    }
+}

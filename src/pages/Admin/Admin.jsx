@@ -1,18 +1,26 @@
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import '../../App.css';
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { FaUserPen } from "react-icons/fa6";
 import { TiShoppingCart } from "react-icons/ti";
+import { useEffect } from "react";
 const Admin = () => {
     const user = useSelector(state => state?.usersSlice.user)
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        if(user?.role !== 'admin'){
+            navigate("/")
+        }
+    },[user])
     // console.log(user)
     return (
         <div className="flex min-h-[calc(100vh-120px)]">
 
             <aside className="bg-white  p-4 max-w-60 w-full min-h-full customShadow">
                 {/* profile logo */}
-                <div className=" border-2 border-blue-500 h-20 flex gap-3 items-center">
+                <div className=" h-20 flex gap-3 items-center">
                     <div className='text-[40px] w-14 h-14 rounded-full  border-2 border-red-600 cursor-pointer relative flex justify-center items-center'>
                         {
                             user?.profilePicture ? (
@@ -47,7 +55,7 @@ const Admin = () => {
                 </nav>
             </aside>
 
-            <main className="border border-green-400 flex-1">
+            <main className=" flex-1">
                 <Outlet></Outlet>
             </main>
         </div>

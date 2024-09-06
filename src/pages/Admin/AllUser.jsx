@@ -33,7 +33,7 @@ const AllUser = () => {
 
   // console.log(allUser)
   return (
-    <div className="p-6 ">
+    <div className="p-6">
       <table className="w-full text-sm text-left text-gray-500 bg-white">
         <thead className="tableStyle text-xs text-gray-700 uppercase ">
           <tr>
