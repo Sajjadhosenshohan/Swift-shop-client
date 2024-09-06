@@ -17,7 +17,7 @@ const initial = {
     sellingPrice: "",
 
 }
-const AddProducts = ({ onClose }) => {
+const AddProducts = ({ onClose,fetchAllProduct }) => {
 
     const [data, setData] = useState(initial)
     const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
@@ -80,6 +80,7 @@ const AddProducts = ({ onClose }) => {
         if(uploadRes.success){
             toast.success(uploadRes.message)
             onClose()
+            fetchAllProduct()
         }
         if(uploadRes.error){
             toast.error(uploadRes.message)

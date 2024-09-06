@@ -53,7 +53,7 @@ const Products = () => {
 
       {/* upload product */}
       {
-        modal && <AddProducts onClose={onClose} />
+        modal && <AddProducts onClose={onClose} fetchAllProduct={fetchAllProduct}/>
       }
     </div>
   )

@@ -12,10 +12,10 @@ const AllProductCard = ({ data , fetchAllProduct}) => {
 
     return (
         <div className='bg-white p-4 rounded group'>
-            <div className='w-40'>
+            <div className='w-40 space-y-1'>
 
                 <div className='flex justify-center items-center hover:scale-105 transition-all duration-100  '>
-                    <img src={data?.productImage[0]} className=' border w-32 h-32 object-fill border-green-600 ' />
+                    <img src={data?.productImage[0]} className=' w-32 h-32 object-fill ' />
                 </div>
 
                 <h1 className='text-ellipsis line-clamp-2'>{data.productName}</h1>
@@ -23,9 +23,7 @@ const AllProductCard = ({ data , fetchAllProduct}) => {
                 <div>
 
                     <p className='font-semibold'>
-                        {data.sellingPrice}
-
-
+                        $ {data.sellingPrice}
                     </p>
 
                     <div onClick={()=>setEditProduct(true)} className='w-fit ml-auto p-2 bg-green-100 hover:bg-green-500 rounded-full hover:text-white cursor-pointer' >

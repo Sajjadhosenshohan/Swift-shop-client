@@ -4,5 +4,8 @@
 
 .tableStyle th,td{
     text-align: center;
-    
+}
+
+.scrollbar-none::-webkit-scrollbar{
+    display: none;
 }

@@ -1,7 +1,15 @@
 
+import CategoryList from "./User/CategoryList"
+
+
 const Home = () => {
+  
   return (
-    <div>Home</div>
+    <div className="container mx-auto p-4">
+
+      {/* category list */}
+      <CategoryList />
+    </div>
   )
 }
 
