@@ -21,21 +21,21 @@ const CategoryList = () => {
         fetchData()
     }, [])
 
-    console.log(productCategory)
+    // console.log(productCategory)
 
     if (loading) {
         <p>loading....</p>
     }
     return (
-        <div>
+        <div className="p-4">
 
             <div className="flex justify-center gap-5 overflow-auto scrollbar-none">
                 {
                     productCategory?.map((p, idx) => {
                         return (
                             <div key={idx} >
-                                <div className="bg-white w-14 h-14 md:w-20 md:h-20 p-3 rounded-full flex justify-center items-center overflow-hidden group hover:bg-red-100 duration-75 transition">
-                                    <img className="hover:scale-110 duration-75  w-full" src={p?.productImage[0]} alt="img" />
+                                <div className="bg-slate-200  w-14 h-14 md:w-20 md:h-20 p-3 rounded-full flex cursor-pointer justify-center items-center overflow-hidden group hover:bg-red-100 duration-200 transition">
+                                    <img className=" duration-75  w-full object-scale-down mix-blend-multiply hover:scale-125" src={p?.productImage[0]} alt="img" />
 
                                 </div>
                                 <p className="text-xs md:text-base text-center">{p?.productName}</p>
