@@ -40,7 +40,7 @@ const Header = () => {
     <header className="h-16 fixed w-full z-40 shadow-md bg-white">
       <div className="h-full  container mx-auto  flex justify-between items-center px-4">
         <div>
-          <Link to=""><Logo /></Link>
+          <Link to="/"><Logo /></Link>
         </div>
 
         <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow '>

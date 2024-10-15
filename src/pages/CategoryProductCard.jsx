@@ -71,7 +71,7 @@ const CategoryProductCard = ({ category, heading }) => {
                 ) : (
                     data?.map((product, index) => {
                         return (
-                            <Link key={index} to={"product/" + product?._id} className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex'>
+                            <Link key={index} to={"/product/" + product?._id} className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex'>
                                 <div className='bg-slate-200 h-full p-4 flex-1'>
                                     <img src={product.productImage[0]} className='object-scale-down h-full hover:scale-110 transition-all w-full' />
                                 </div>

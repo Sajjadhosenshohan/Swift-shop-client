@@ -8,7 +8,7 @@ import VerticalCategoryProduct from "./VerticalCategoryProduct"
 const Home = () => {
 
   return (
-    <div className="max-w-6xl mx-auto py-4">
+    <div className="container mx-auto py-4">
 
       {/* category list */}
       <CategoryList />
