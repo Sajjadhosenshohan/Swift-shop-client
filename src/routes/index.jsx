@@ -8,6 +8,7 @@ import Admin from "../pages/Admin/Admin";
 import AllUser from "../pages/Admin/AllUser";
 import Products from "../pages/Admin/Products";
 import ProductDetails from "../pages/User/ProductDetails";
+import AddToCartProduct from "../pages/User/AddToCartProduct";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "forget-password",
         element: <ForgetPassword />
+      },
+      {
+        path: "cart",
+        element: <AddToCartProduct />
       },
       {
         path: "/product/:id",

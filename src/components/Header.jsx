@@ -6,14 +6,18 @@ import { GrSearch } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { setUserDetails } from "../store/userSlice";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
+import Context from "../Context/Context";
+
 // import { setUserDetails } from "../store/userSlice";
 const Header = () => {
   const dispatch = useDispatch()
   const [menu, setShowMenu] = useState(false)
 
+  const { cartProductCount } = useContext(Context) || {};
+  console.log('Cart Product:',cartProductCount );
+
   const user = useSelector(state => state?.usersSlice.user)
-  // console.log(user)
 
   // useCallback to memoize the handleLogout function
   const handleLogout = useCallback(async () => {
@@ -89,14 +93,16 @@ const Header = () => {
 
 
           </div>
+          {
+            user?._id &&
+            <Link to={"/cart"} className='text-2xl relative'>
+              <span><FaShoppingCart /></span>
 
-          <Link to={"/cart"} className='text-2xl relative'>
-            <span><FaShoppingCart /></span>
-
-            <div className='bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3'>
-              <p className='text-sm'>0</p>
-            </div>
-          </Link>
+              <div className='bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3'>
+                <p className='text-sm'>{cartProductCount || 0}</p>
+              </div>
+            </Link>
+          }
 
 
 

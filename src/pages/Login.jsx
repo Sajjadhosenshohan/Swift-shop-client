@@ -4,10 +4,10 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { ContextProvider } from "../Context/ContextProvider";
+import Context from "../Context/Context";
 const Login = () => {
     const navigate = useNavigate()
-    const { userDetails } = useContext(ContextProvider)
+    const { userDetails,fetchUserAddToCart } = useContext(Context)
 
     const [showPassword, setShowPassword] = useState(false)
     const [data, setData] = useState({ email: "", password: "" })
@@ -36,14 +36,15 @@ const Login = () => {
 
         const dataApi = await signInResponse.json()
 
-        if (dataApi.success) {
+        if (dataApi?.success) {
             toast.success(dataApi.message)
             navigate('/')
             userDetails()
+            fetchUserAddToCart()
 
         }
 
-        if (dataApi.error) {
+        if (dataApi?.error) {
             toast.error(dataApi.message)
         }
 
