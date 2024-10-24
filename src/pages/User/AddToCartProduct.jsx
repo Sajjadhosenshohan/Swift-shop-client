@@ -1,40 +1,83 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { MdDelete } from "react-icons/md";
 import Context from '../../Context/Context';
 
 const AddToCartProduct = () => {
     const [loading, setLoading] = useState(true); // Start loading true
-    const context = useContext(Context) || {}; // Get cart data from context
+    const { cartProductCount, cartProduct, fetchUserAddToCart } = useContext(Context) || {}; // Get cart data from context
     const loadingCart = new Array(4).fill(null);
-    console.log(context?.cartProductCount, context?.cartProduct);
+    console.log(cartProductCount, cartProduct);
 
-    // Simulate loading data when the component mounts
+
     useEffect(() => {
         const loadData = async () => {
-            // Simulate fetching data here if needed
-            setLoading(false); // Set loading to false after fetching data
+            setLoading(false);
         };
         loadData();
-    }, []);
+    }, [cartProduct]);
 
-    // Function to delete a product
-    const deleteCartProduct = (productId) => {
-        // removeProduct(productId); // Call the remove function from context
-    };
+    
 
     // Functions to increase/decrease quantity
-    const increaseQty = (productId) => {
-        // updateQuantity(productId, 1); // Call the update quantity function from context
+    const increaseQty = async (id, qty) => {
+
+        const updateQty = await fetch(`http://localhost:8000/api/updateCartQuantity`, {
+            method: "post",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                _id: id,
+                quantity: qty + 1
+            })
+        })
+
+        const response = await updateQty.json();
+        if (response?.data?.modifiedCount) {
+            fetchUserAddToCart()
+        }
+
     };
 
-    const decreaseQty = (productId) => {
-        // updateQuantity(productId, -1); // Call the update quantity function from context
+    const decreaseQty = async (id, qty) => {
+        const updateQty = await fetch(`http://localhost:8000/api/updateCartQuantity`, {
+            method: "post",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                _id: id,
+                quantity: qty - 1
+            })
+        })
+
+        const response = await updateQty.json();
+        if (response?.data?.modifiedCount) {
+            fetchUserAddToCart()
+        }
+    };
+
+
+    const deleteCartProduct = async(_id) => {
+        console.log(_id)
+        const deleteQty = await fetch(`http://localhost:8000/api/deleteCartProduct/${_id}`, {
+            method: "Delete",
+            credentials: "include",
+        })
+
+        const response = await deleteQty.json();
+
+        if (response?.data?.deletedCount) {
+            fetchUserAddToCart()
+        }
     };
 
     return (
         <div className='container mx-auto'>
             <div className='text-center text-lg my-3'>
-                {context?.cartProductCount === 0 && <p className='bg-white py-5'>No Data</p>}
+                {cartProductCount === 0 && <p className='bg-white py-5'>No Data</p>}
             </div>
 
             <div className='flex flex-col lg:flex-row gap-10 lg:justify-between p-4'>
@@ -45,7 +88,7 @@ const AddToCartProduct = () => {
                             <div key={index} className='w-full bg-slate-200 h-32 my-2 border border-slate-300 animate-pulse rounded'></div>
                         ))
                     ) : (
-                        context?.cartProduct?.map((product) => (
+                        cartProduct?.map((product) => (
                             <div key={product?._id} className='w-full bg-white h-32 my-2 border border-slate-300 rounded grid grid-cols-[128px,1fr]'>
                                 <div className='w-32 h-32 bg-slate-200'>
                                     {product?.productId?.productImage?.length > 0 ? (
@@ -73,14 +116,14 @@ const AddToCartProduct = () => {
                                     <div className='flex items-center gap-3 mt-1'>
                                         <button
                                             className='border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded'
-                                            onClick={() => decreaseQty(product?._id)}
+                                            onClick={() => decreaseQty(product?._id, product?.quantity)}
                                         >
                                             -
                                         </button>
                                         <span>{product?.quantity}</span>
                                         <button
                                             className='border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded'
-                                            onClick={() => increaseQty(product?._id)}
+                                            onClick={() => increaseQty(product?._id, product?.quantity)}
                                         >
                                             +
                                         </button>
@@ -100,11 +143,11 @@ const AddToCartProduct = () => {
                             <h2 className='text-white bg-red-600 px-4 py-1'>Summary</h2>
                             <div className='flex items-center justify-between px-4 gap-2 font-medium text-lg text-slate-600'>
                                 <p>Quantity</p>
-                                <p>{context?.cartProductCount}</p>
+                                <p>{cartProductCount}</p>
                             </div>
                             <div className='flex items-center justify-between px-4 gap-2 font-medium text-lg text-slate-600'>
                                 <p>Total Price</p>
-                                <p>{context?.cartProduct?.reduce((total, product) => total + (product?.productId?.sellingPrice * product?.quantity || 0), 0)}</p>
+                                <p>{cartProduct?.reduce((total, product) => total + (product?.productId?.sellingPrice * product?.quantity || 0), 0)}</p>
                             </div>
                             <button className='bg-blue-600 p-2 text-white w-full mt-2'>Payment</button>
                         </div>
